@@ -1,0 +1,9 @@
+noPhotos
+Particle vpho 4.42 0
+
+Decay vpho
+1 ConExc 74110;
+Enddecay
+
+
+End

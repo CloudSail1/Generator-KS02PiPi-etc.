@@ -1,0 +1,42 @@
+//DENG Zi-yan 2008-03-17
+
+#include "$OFFLINEEVENTLOOPMGRROOT/share/OfflineEventLoopMgr_Option.txt"
+
+//*************job options for EvtGen***************
+#include "$BESEVTGENROOT/share/BesEvtGen.txt"
+EvtDecay.userDecayTableName ="incl.dec";
+EvtDecay.ParentParticle = "vpho";
+//EvtDecay.PdtTableDir = "pdt.table";
+//EvtDecay.DecayTopology = "EvtToptest";
+//EvtDecay.ReadTruth={{"vpho"},{"1","0","0"},{"1","0","1"},{"1","0","2"}};
+
+
+ApplicationMgr.DLLs += { "BesServices"};
+ApplicationMgr.TopAlg += { "EvtDecay"};
+//--------------------------------
+BesRndmGenSvc.ReadFromFile = false;
+BesRndmGenSvc.FileToRead = "BesRndmGenSvc.out";
+ 
+ 
+EvtDecay.NutupleFile=true;
+ApplicationMgr.HistogramPersistency = "ROOT";   
+NTupleSvc.Output += { "MYROOTFILE DATAFILE='mctest.root' OPT='NEW' TYP='ROOT'" };
+ 
+ 
+BesRndmGenSvc.RndmSeed = 561;
+#include "$REALIZATIONSVCROOT/share/jobOptions_Realization.txt"
+RealizationSvc.RunIdList = {-29687};
+//realization
+RealizationSvc.IfUseTrg = false;
+ 
+// mdc noise model
+G4Svc.MdcNoiseFile = "$MDCSIMROOT/share/run23096noise.root";
+ 
+MdcTunningSvc.path_mdc = "$MDCTUNN\INGSVCROOT/share/par/";
+G4Svc.FADSMacro = "$BESSIMROOT/share/run.mac";
+ 
+#include "$BESSIMROOT/share/Bes_Gen.txt"
+ 
+ApplicationMgr.EvtMax = 10;
+
+
